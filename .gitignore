@@ -1,0 +1,5 @@
+﻿venv/
+__pycache__/
+.ipynb_checkpoints/
+notebooks/all_datasets/
+notebooks/brain_tumor_model.h5
