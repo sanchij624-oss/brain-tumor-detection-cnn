@@ -1,108 +1,133 @@
-# Brain Tumor Detection using CNN (MRI Images)
+# 🧠 Brain Tumor Detection using CNN
 
-This project develops an automated **brain tumor detection system** using **Convolutional Neural Networks (CNNs)** to classify brain MRI images as **Tumor** or **Non-Tumor** for medical assistance.
-
----
+An AI-based brain MRI image classification project using **Convolutional Neural Networks (CNNs)** and **TensorFlow/Keras** to classify MRI images into four categories.
 
 ## 🚀 Project Overview
 
-- **Task**: Binary image classification (Tumor vs Non-Tumor) on brain MRI scans.  
-- **Approach**: Custom CNN built with **TensorFlow/Keras**, trained on a **combined dataset from 4 Kaggle sources** to improve robustness and reduce overfitting.  
-- **Result**: Achieved around **91–92% validation accuracy** using training callbacks such as EarlyStopping, ReduceLROnPlateau, and ModelCheckpoint.
+This project uses deep learning to classify brain MRI images into:
 
----
+- Glioma
+- Meningioma
+- No Tumor
+- Pituitary
 
-## 📂 Datasets
+**Model:** Custom CNN  
+**Framework:** TensorFlow / Keras  
+**Input Image Size:** 224 × 224 × 3  
+**Number of Classes:** 4
 
-This project merges four publicly available MRI datasets into a single unified dataset:
+## ✨ Features
 
-1. **Brain Tumor Detection** – `ahmedhamada0/brain-tumor-detection`  
-   - https://www.kaggle.com/datasets/ahmedhamada0/brain-tumor-detection  
+- Brain MRI image classification into four categories.
+- Image preprocessing and normalization.
+- CNN model training and evaluation.
+- Training and validation performance visualization.
+- Grad-CAM visualization for model interpretability.
+- Interactive Streamlit web application.
+- Prediction confidence and class-wise probabilities.
 
-2. **Brain MRI Images for Brain Tumor Detection** – `navoneel/brain-mri-images-for-brain-tumor-detection`  
-   - https://www.kaggle.com/datasets/navoneel/brain-mri-images-for-brain-tumor-detection  
+## 📊 Model Performance
 
-3. **Brain Tumor MRI Dataset** – `masoudnickparvar/brain-tumor-mri-dataset`  
-   - https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset  
+| Metric | Result |
+|---|---:|
+| Training Accuracy | 98.12% |
+| Validation Accuracy | 91.61% |
+| Test Accuracy | 87.19% |
+| Test Loss | 0.8680 |
 
-4. **Brain Tumor MRI Data** – `tombackert/brain-tumor-mri-data`  
-   - https://www.kaggle.com/datasets/tombackert/brain-tumor-mri-data  
+The model was trained for 10 epochs. The difference between training and test performance indicates some overfitting, so further improvements are possible.
 
-> **Note**: The raw image data is **not included** in this repository due to size and licensing. Please download it yourself from Kaggle.
->
-> ## 🌐 Streamlit Web Application
+## 🏗️ CNN Architecture
 
-This project includes an interactive web application built using Streamlit for brain tumor classification.
+The model uses a Sequential CNN architecture consisting of:
 
-### Features
-- Upload brain MRI images in JPG, JPEG, or PNG format.
-- Predict one of four classes:
-  - Glioma
-  - Meningioma
-  - No Tumor
-  - Pituitary
-- Display prediction confidence.
-- View class-wise prediction probabilities.
+1. Input layer (224 × 224 × 3)
+2. Conv2D + MaxPooling2D (32 filters)
+3. Conv2D + MaxPooling2D (64 filters)
+4. Conv2D + MaxPooling2D (128 filters)
+5. Flatten layer
+6. Dense layer (128 neurons)
+7. Dropout (0.5)
+8. Softmax output layer (4 classes)
+
+**Total Parameters:** 11,169,476
+
+## 🛠️ Technologies Used
+
+- Python
+- TensorFlow
+- Keras
+- NumPy
+- OpenCV
+- Pandas
+- Matplotlib
+- Seaborn
+- Scikit-learn
+- Pillow
+- Streamlit
+- Google Colab
+- VS Code
+
+## 🌐 Streamlit Web Application
+
+An interactive web interface allows users to upload brain MRI images and receive model predictions.
+
+### Application Features
+
+- Upload JPG, JPEG, and PNG images.
+- Predict one of four brain MRI categories.
+- Display predicted class and confidence score.
+- Show class-wise prediction probabilities.
 
 ### Run the Application
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the Streamlit application:
 
 ```bash
 streamlit run app.py
 ```
 
-Open `http://localhost:8501` in your browser.
+Open in your browser:
 
-**Note:** The trained model file (`brain_tumor_model.h5`) is required inside the `notebooks/` folder. It is not included in this GitHub repository because of its large file size.
+```text
+http://localhost:8501
+```
 
-This application is an educational prototype and is not intended for medical diagnosis.
+**Important:** The trained model file `brain_tumor_model.h5` must be placed inside the `notebooks/` directory. It is excluded from this repository because of its large size.
 
----
+## 📁 Project Structure
 
-## 🧠 Methodology
+```text
+brain-tumor-detection-cnn/
+│
+├── app.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+│
+├── notebooks/
+│   ├── brain_tumor_detection.ipynb
+│   ├── brain_tumor_model.h5
+│   ├── training_performance.png
+│   └── all_datasets/
+│
+└── screenshots/
+```
 
-### 1. Data Preparation
+Note: The trained model and dataset are kept locally and are not included in the GitHub repository.
 
-- Download all four Kaggle datasets using the **Kaggle API** in Colab.  
-- Extract and move images into a unified directory structure, separating **Tumor** and **Non-Tumor**.  
-- Apply preprocessing:
-  - Resize images to fixed size (128x128 or 224x224).  
-  - Normalize pixel values.  
-  - Use `ImageDataGenerator` for **data augmentation** (rotation, shifts, zoom, flips, brightness changes).  
-
-### 2. Model Architecture
-
-The model uses a **CNN with 4 Conv2D blocks** combined with:
-
-- `Conv2D` + `BatchNormalization` + `MaxPooling2D` layers for feature extraction.  
-- `GlobalAveragePooling2D` to reduce dimensionality.  
-- `Dense` layers with `Dropout` (0.5) to prevent overfitting.  
-- Final layer: `Dense(1, activation='sigmoid')` for binary classification.  
-- **Optimizer**: Adam (learning rate 1e-4).  
-- **Loss**: Binary cross-entropy.  
-
-### 3. Training Strategy
-
-- Train/validation/test split using `train_test_split`.  
-- Callbacks for robust training:
-  - `EarlyStopping`: Stop when validation accuracy plateaus.  
-  - `ReduceLROnPlateau`: Reduce learning rate when loss stops improving.  
-  - `ModelCheckpoint`: Save the best model as `best_brain_tumor_model.keras`.  
-
----
-
-## 📊 Results
-
-- **Validation Accuracy**: ~91–92% (binary classification, Tumor vs Non-Tumor).  
-- The model shows strong performance on unseen validation data when trained on the combined dataset with data augmentation and proper regularization.  
-
----
-
-## 🧪 How to Run
+## ▶️ How to Run
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Aashish187/brain-tumor-detection-cnn.git
+git clone https://github.com/sanchij624-oss/brain-tumor-detection-cnn.git
 cd brain-tumor-detection-cnn
 ```
 
@@ -112,41 +137,25 @@ cd brain-tumor-detection-cnn
 pip install -r requirements.txt
 ```
 
-### 3. Download Datasets
+### 3. Add the Required Files
 
-- Create a Kaggle account and download the four datasets listed above.  
-- Organize them in an `all_datasets/` folder or modify the notebook paths accordingly.  
+- Place the MRI dataset in `notebooks/all_datasets/`.
+- Place the trained model at `notebooks/brain_tumor_model.h5`.
 
-### 4. Run the Notebook
+### 4. Run the Application
 
-- Open `notebooks/Brain_Tumor_Detection_CNN.ipynb` in Jupyter or Google Colab.  
-- Follow the cells in order:
-  1. Import libraries and configure GPU.  
-  2. Download and organize datasets.  
-  3. Preprocess images and create train/validation/test sets.  
-  4. Define and train the CNN.  
-  5. Evaluate and visualize results.  
+```bash
+streamlit run app.py
+```
 
----
+## 🔮 Future Improvements
 
-## 🔧 Technologies Used
+- Improve model generalization and reduce overfitting.
+- Improve classification performance for individual tumor classes.
+- Enhance Grad-CAM visualizations.
+- Experiment with transfer learning architectures.
+- Evaluate on additional independent MRI datasets.
 
-- **Language**: Python  
-- **Frameworks**: TensorFlow, Keras  
-- **Libraries**: NumPy, Pandas, OpenCV, Matplotlib, Seaborn, Scikit-learn  
-- **Platform**: Google Colab (GPU enabled)  
+## ⚠️ Disclaimer
 
----
-
-## 📌 Future Work
-
-- Add Grad-CAM visualizations for model interpretability.  
-- Extend to multi-class classification (e.g., different tumor types).  
-- Deploy as a web application (Streamlit or Flask).  
-- Test on additional medical imaging datasets.  
-
----
-
-## 📜 Acknowledgements
-
-Thanks to the authors of the public Kaggle datasets used in this project for making their MRI collections available for research and educational purposes.
+This project is developed
