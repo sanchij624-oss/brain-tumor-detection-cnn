@@ -159,3 +159,7 @@ streamlit run app.py
 ## ⚠️ Disclaimer
 
 This project is developed
+
+🙏 Acknowledgements
+
+Thanks to the contributors of publicly available brain MRI datasets used for educational and research purposes.
