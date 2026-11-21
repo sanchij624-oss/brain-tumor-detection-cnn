@@ -29,6 +29,32 @@ This project merges four publicly available MRI datasets into a single unified d
    - https://www.kaggle.com/datasets/tombackert/brain-tumor-mri-data  
 
 > **Note**: The raw image data is **not included** in this repository due to size and licensing. Please download it yourself from Kaggle.
+>
+> ## 🌐 Streamlit Web Application
+
+This project includes an interactive web application built using Streamlit for brain tumor classification.
+
+### Features
+- Upload brain MRI images in JPG, JPEG, or PNG format.
+- Predict one of four classes:
+  - Glioma
+  - Meningioma
+  - No Tumor
+  - Pituitary
+- Display prediction confidence.
+- View class-wise prediction probabilities.
+
+### Run the Application
+
+```bash
+streamlit run app.py
+```
+
+Open `http://localhost:8501` in your browser.
+
+**Note:** The trained model file (`brain_tumor_model.h5`) is required inside the `notebooks/` folder. It is not included in this GitHub repository because of its large file size.
+
+This application is an educational prototype and is not intended for medical diagnosis.
 
 ---
 
